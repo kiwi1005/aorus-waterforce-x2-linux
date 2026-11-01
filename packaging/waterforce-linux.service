@@ -1,0 +1,20 @@
+[Unit]
+Description=AORUS WATERFORCE X II CPU temperature display
+After=systemd-modules-load.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=waterforce-linux
+Group=waterforce-linux
+Environment=PYTHONPATH=/opt/waterforce-linux
+ExecStart=@PYTHON@ -m waterforce_linux monitor
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

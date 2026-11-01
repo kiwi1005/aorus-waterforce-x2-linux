@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+*.exe
+*.dll
+*.pkg
+*.PKG
+*.zip
+*.log
+.analysis-venv/

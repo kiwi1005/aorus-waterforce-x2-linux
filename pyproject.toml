@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aorus-waterforce-x2-linux"
+version = "0.1.0"
+description = "Linux CPU temperature display and firmware tools for AORUS WATERFORCE X II"
+requires-python = ">=3.11"
+license = {text = "GPL-3.0-or-later"}
+readme = "README.md"
+authors = [{name = "Hsiu-Wei Chen"}]
+
+[project.scripts]
+waterforce-linux = "waterforce_linux.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["waterforce_linux*"]
