@@ -30,6 +30,19 @@ journalctl -u waterforce-linux -f
 若 btop 顯示16°C而實際 CPU 更熱，先檢查它是不是選到 acpitz；應選真正的
 CPU感測器，例如 `k10temp/Tctl`，再重開 btop。不要任意套用主機專屬核心補丁。
 
+## 預設畫面選單
+
+提供溫度大字、頻率大字、溫度＋頻率、四格監控、散熱監控、本機 IPv4 六種預設。
+
+```sh
+sudo python3.11 -m waterforce_linux preset --manage-service choose
+# 或直接指定：
+sudo python3.11 -m waterforce_linux preset --manage-service apply network
+```
+
+IP 會約每10秒重新檢查，需搭配新版溫度服務。預設不改寫風扇／水泵曲線。
+詳見[預設與散熱測試說明](presets.md)。
+
 ## 更換圖片／動畫
 
 另需 FFmpeg（含 libx264）及 ffprobe。支援 PNG、JPEG、GIF 與常見影片，

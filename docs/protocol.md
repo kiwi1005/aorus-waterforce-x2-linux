@@ -68,8 +68,13 @@ screen. `E2` sets four groups of display flags; `DF` reads them. F1 uses6 flags
 per group, F2 uses13. CPU temperature is bit3 in either layout. The public CLI
 uses the firmware-dependent width and preserves groups2–4.
 
-`AC 00` selects Celsius. `B6` saves settings to flash, only on explicit `--save`.
-Normal telemetry never calls save. No media upload or RGB control is included.
+`AC 00` selects Celsius. `B6` applies/saves settings; media playback and presets
+require this step on the tested F2.0 unit. Normal telemetry never calls save.
+See [media commands](media.md) and [presets](presets.md).
+
+`E4 mode R1 G1 B1 ... R4 G4 B4` sets native text-zone colors. `AA` sets
+rotation intervals. Mode 2 enables its CPU-name text field with `AE 01`; `E1`
+sends the length-prefixed ASCII label. The network preset reuses this text field.
 
 ## Firmware transfer
 
@@ -91,4 +96,5 @@ The exact update completed once on real hardware and firmware readback became
 2.0 about409sec after transfer finished. The user confirmed the screen lit.
 After correcting telemetry, the LCD followed CPU load/temperature. The runtime
 service restarted successfully. A cold boot remains untested; other devices,
-firmware images, firmware recovery, RGB and custom media are outside this release.
+firmware images, firmware recovery and RGB remain untested. Custom media has
+separate validation described in [the media guide](media.md).

@@ -11,7 +11,8 @@ import time
 from pathlib import Path
 
 from .device import Cooler
-from .sensors import CpuSensors, core_counts, cpu_name, is_amd
+from .presets import read_config, live_label
+from .sensors import CpuSensors, core_counts, is_amd
 
 log = logging.getLogger("waterforce-monitor")
 running = True
@@ -55,6 +56,8 @@ def run(once=False, sensor=None):
         original_modes = cooler.modes()
         failed = False
         last_log = 0
+        last_label_check = 0
+        last_label = None
         while running:
             try:
                 temperature = read_temperature(sensors.temp_path)
@@ -78,9 +81,15 @@ def run(once=False, sensor=None):
                     cooler.send(bytes([0xE5, kind, int(mode)]))
                 log.info("CPU sensor recovered; restored original cooling modes")
                 failed = False
-                cooler.send_cpu_name(cpu_name())
-            if last_log == 0:
-                cooler.send_cpu_name(cpu_name())
+                last_label_check = 0
+                last_label = None
+            now = time.monotonic()
+            if now - last_label_check >= 10 or last_label is None:
+                label = live_label(read_config())
+                if label != last_label:
+                    cooler.send_cpu_name(label)
+                    last_label = label
+                last_label_check = now
             if firmware >= (2, 0):
                 cooler.send(f2_sensor_payload(temperature, sensors.load(), sensors.freq_mhz()))
             else:

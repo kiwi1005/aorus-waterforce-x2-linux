@@ -4,7 +4,7 @@ import json
 import sys
 import time
 from . import __version__
-from . import firmware, monitor, media
+from . import firmware, monitor, media, presets
 from .device import Cooler
 
 
@@ -38,12 +38,14 @@ def display_temperature(cooler, persist=False):
 def main():
     p = argparse.ArgumentParser(prog='waterforce-linux')
     p.add_argument('--version', action='version', version=__version__)
-    p.add_argument('command', choices=['status', 'monitor', 'display-temperature', 'firmware', 'media'])
+    p.add_argument('command', choices=['status', 'monitor', 'display-temperature', 'firmware', 'media', 'preset'])
     p.add_argument('args', nargs=argparse.REMAINDER, help=argparse.SUPPRESS)
     args = p.parse_args()
     rest = args.args
     if args.command == 'monitor':
         monitor.main(rest)
+    elif args.command == 'preset':
+        presets.main(rest)
     elif args.command == 'media':
         media.main(rest)
     elif args.command == 'firmware':

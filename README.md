@@ -29,6 +29,7 @@ this program uses HID userspace access and does not require that module.
 - Linux, Python **3.11+**, USB HID access; no Python runtime dependencies.
 - A working CPU temperature sensor exposed through hwmon: `k10temp`,
   `zenpower`, or `coretemp`; or an explicitly selected `--sensor` path.
+- `ip` (iproute2/iproute) for the optional live IPv4 preset.
 - `systemd`, `udev`, and `fuser` (usually the `psmisc` package) for the supplied
   service installer and exclusive-access checks.
 - Stop other cooler clients, including RigDeck/CoolerControl, before running
@@ -63,6 +64,13 @@ sudo python3.11 -m waterforce_linux monitor --sensor /sys/class/hwmon/hwmon2/tem
 
 Check the associated `name` and `temp1_label` first. Numeric hwmon paths can
 change across boots; automatic discovery is preferable when supported.
+
+## Display presets
+
+Choose temperature, frequency, dual-metric, dashboard, cooling, or local-IP
+layouts with `preset --manage-service choose` (root). See the bilingual
+[preset guide](docs/presets.md). IP text follows address changes without flash
+writes; requires the updated monitor service.
 
 ## Pictures and animations
 
