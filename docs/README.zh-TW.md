@@ -30,6 +30,30 @@ journalctl -u waterforce-linux -f
 若 btop 顯示16°C而實際 CPU 更熱，先檢查它是不是選到 acpitz；應選真正的
 CPU感測器，例如 `k10temp/Tctl`，再重開 btop。不要任意套用主機專屬核心補丁。
 
+## 更換圖片／動畫
+
+另需 FFmpeg（含 libx264）及 ffprobe。支援 PNG、JPEG、GIF 與常見影片，
+自動轉成320×320；圖片以靜止短片播放，動畫循環播放。預設保留完整圖片並加黑邊，
+可用 `--fit crop` 裁切填滿。預設最多10秒，可用 `--duration 30` 調整，上限60秒。
+
+```sh
+# 上傳並播放圖片
+sudo python3.11 -m waterforce_linux media --manage-service upload photo.png --name photo.mkv --play
+# 上傳並播放動畫
+sudo python3.11 -m waterforce_linux media --manage-service upload animation.gif --name animation.mkv --play
+# 列出已存檔案
+sudo python3.11 -m waterforce_linux media --manage-service list
+# 切換已存畫面
+sudo python3.11 -m waterforce_linux media --manage-service play photo.mkv
+# 回到 CPU 溫度
+sudo python3.11 -m waterforce_linux media --manage-service temperature
+```
+
+`--manage-service` 會暫停並恢復原本正在執行的溫度服務；轉檔先完成才暫停服務。
+不會覆寫同名檔案、刪除原有圖片或重新排序。圖片會寫入裝置儲存空間；播放或切回溫度時會自動套用並儲存設定。
+實測 F2.0 若省略套用，雖然設定讀回改變，螢幕仍不會切換。這些操作不會重刷韌體。
+完整說明與實測範圍見[圖片與動畫](media.md)。
+
 ## 韌體更新與限制
 
 [韌體操作說明](firmware.md)只涵蓋已測試的 X II 240 F1.2 → 指定 F2.0。

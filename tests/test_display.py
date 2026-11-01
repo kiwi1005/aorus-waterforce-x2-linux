@@ -15,7 +15,9 @@ class FakeCooler:
     def screen_mode(self): return self.mode
     def send(self, p):
         self.sent.append(p)
-        if p[0] == 0xe2: self.flags = bytearray(p[1:])
+        if p[0] == 0xe2:
+            if self.mode != 1: raise AssertionError('Select mode before writing its fields')
+            self.flags = bytearray(p[1:])
         if p[0] == 0xe7: self.mode = p[1]
     def save(self): self.saved = True
 

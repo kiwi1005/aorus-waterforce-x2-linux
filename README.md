@@ -1,7 +1,7 @@
 # AORUS WATERFORCE X II on Linux
 
 Display real CPU temperature on an AORUS WATERFORCE X II cooler under Linux,
-including the **F2.0 telemetry format**. Includes an optional firmware updater
+including the **F2.0 telemetry format**, plus custom pictures and animations. Includes an optional firmware updater
 for the exact X II 240 F1.2 → F2.0 upgrade tested during development.
 
 **Hardware-tested:** WATERFORCE X II 240, USB `0414:7a5e`, firmware F2.0,
@@ -10,7 +10,7 @@ load test and the service survived restart. A full power-cycle test has not
 been performed. Other sizes/firmware combinations are unverified.
 
 [繁體中文說明](docs/README.zh-TW.md) · [Protocol](docs/protocol.md) ·
-[Firmware update](docs/firmware.md) · [Attribution](NOTICE.md)
+[Pictures and animations](docs/media.md) · [Firmware update](docs/firmware.md) · [Attribution](NOTICE.md)
 
 ## Why this exists
 
@@ -52,7 +52,7 @@ sudo python3.11 -m waterforce_linux monitor
 
 `display-temperature` selects the built-in first screen, Celsius, and CPU
 temperature in its first information zone. `--save` persists the settings;
-omit it for a temporary change. Run it while the monitor service is stopped.
+omit it to stage settings (F2.0 may not visibly apply them until saved). Run it while the monitor service is stopped.
 It does not upload images or replace stored media.
 
 For a non-default sensor:
@@ -63,6 +63,12 @@ sudo python3.11 -m waterforce_linux monitor --sensor /sys/class/hwmon/hwmon2/tem
 
 Check the associated `name` and `temp1_label` first. Numeric hwmon paths can
 change across boots; automatic discovery is preferable when supported.
+
+## Pictures and animations
+
+See [the media guide](docs/media.md) for picture/GIF/video conversion, uploading,
+playback switching and returning to CPU temperature. Requires FFmpeg + ffprobe.
+Existing media is preserved; no firmware flash is needed.
 
 ## Start at boot
 

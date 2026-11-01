@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aorus-waterforce-x2-linux"
-version = "0.1.0"
+version = "0.2.0"
 description = "Linux CPU temperature display and firmware tools for AORUS WATERFORCE X II"
 requires-python = ">=3.11"
 license = {text = "GPL-3.0-or-later"}

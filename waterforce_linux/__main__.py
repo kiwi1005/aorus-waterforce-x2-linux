@@ -4,13 +4,17 @@ import json
 import sys
 import time
 from . import __version__
-from . import firmware, monitor
+from . import firmware, monitor, media
 from .device import Cooler
 
 
 def display_temperature(cooler, persist=False):
     version = tuple(map(int, cooler.firmware().split('.')))
     width = 13 if version >= (2, 0) else 6
+    # Display fields are per-mode: activate Faith1 before reading or updating them.
+    cooler.send(b'\xfb\x0a\x01')
+    cooler.send(b'\xe7\x01\x00')
+    time.sleep(.2)
     old = cooler.query(b'\xdf')
     flags = bytearray(old[2:2+width*4])
     if len(flags) != width*4:
@@ -19,7 +23,6 @@ def display_temperature(cooler, persist=False):
     flags[3] = 1  # Display4XII(Elite).CPUTemperature = 1 << 3
     cooler.send(b'\xe2' + flags)
     time.sleep(.2)
-    cooler.send(b'\xe7\x01\x00')
     cooler.send(b'\xac\x00')  # Celsius
     time.sleep(.2)
     if cooler.query(b'\xdf')[2:2+width*4] != flags:
@@ -35,10 +38,14 @@ def display_temperature(cooler, persist=False):
 def main():
     p = argparse.ArgumentParser(prog='waterforce-linux')
     p.add_argument('--version', action='version', version=__version__)
-    p.add_argument('command', choices=['status', 'monitor', 'display-temperature', 'firmware'])
-    args, rest = p.parse_known_args()
+    p.add_argument('command', choices=['status', 'monitor', 'display-temperature', 'firmware', 'media'])
+    p.add_argument('args', nargs=argparse.REMAINDER, help=argparse.SUPPRESS)
+    args = p.parse_args()
+    rest = args.args
     if args.command == 'monitor':
         monitor.main(rest)
+    elif args.command == 'media':
+        media.main(rest)
     elif args.command == 'firmware':
         firmware.main(rest)
     else:

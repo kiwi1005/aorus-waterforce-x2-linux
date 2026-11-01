@@ -2,7 +2,7 @@
 
 This project is distributed under GPL-3.0-or-later; see LICENSE.
 
-`waterforce_linux/device.py` and `waterforce_linux/sensors.py` are adapted from
+`waterforce_linux/device.py`, `waterforce_linux/sensors.py`, and media protocol/conversion portions of `waterforce_linux/media.py` are adapted from
 [gabriellaines/rigdeck](https://github.com/gabriellaines/rigdeck), commit
 `b9a89b3d8a141922c54b4ba6de3eaae1bcf980e6`, distributed under GPL-3.0-or-later.
 Credit belongs to RigDeck's contributors for their original Linux HID transport,
