@@ -83,5 +83,7 @@ of behavior without telemetry, during long full load, or after a cold boot.
 
 All six presets passed mode/field readback on X II 240 F2.0, and fan/pump modes
 and stored curves matched the pre-test snapshot afterward. The updated telemetry
-service restarted and supplied live data in network mode. Visual confirmation
-of dashboard layout and IP text is pending; other devices are unverified.
+service restarted and supplied live data in network mode. The owner visually confirmed all four dashboard values update, and that the
+complete IP label and rotating temperature/frequency display correctly. Other
+layouts passed device readback but were not individually visually confirmed;
+other devices are unverified.
